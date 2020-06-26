@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
+import Filters from "./filters/Filters";
+
 const theme = createMuiTheme({
   overrides: {
     MuiFormLabel: {
@@ -23,6 +25,12 @@ const theme = createMuiTheme({
         color: "white",
       },
     },
+    // MuiExpansionPanelDetails: {
+    //   root: {
+    //     display: "flex",
+
+    //   },
+    // },
   },
 });
 
@@ -36,7 +44,7 @@ function App() {
             autoComplete="off"
             style={{
               width: "50%",
-              "padding-top": "10%",
+              paddingTop: "10%",
             }}
           >
             <TextField
@@ -44,17 +52,18 @@ function App() {
               style={{
                 width: "80%",
 
-                "vertical-align": "bottom",
+                verticalAlign: "bottom",
               }}
             />
             <Button
               variant="contained"
               color="primary"
-              style={{ "margin-left": "10px" }}
+              style={{ marginLeft: "10px" }}
             >
               Search
             </Button>
           </form>
+          <Filters />
         </header>
       </ThemeProvider>
     </div>

@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const config = require("./config");
 const { Client } = require("@elastic/elasticsearch");
 const client = new Client({ node: config.elasticsearch_endpoint });
@@ -9,6 +10,7 @@ const { availableFilters } = require("./handlers/availableFilters");
 
 const port = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => res.send("ok"));
 app.get("/search", search(client));
