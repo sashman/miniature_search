@@ -1,21 +1,19 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
-    backgroundColor: theme.palette.primary.dark,
   },
   tableBody: {
-    backgroundColor: theme.palette.primary.dark,
+    color: "white",
+  },
+  tableCell: {
     color: "white",
   },
 }));
@@ -35,37 +33,54 @@ const toName = (name, title) => {
   return title;
 };
 
+const formatWebsite = (value) => value.replace(/www\./, "");
+
+const formatCurrency = (value) => `£${value}`;
+
 function Results({ data }) {
   const classes = useStyles();
   return data.results ? (
     <div className="Results">
       <TableContainer>
         <Table className={classes.table} aria-label="simple table">
-          {/* <TableHead>
-            <TableRow>
-              <TableCell align="right">Calories</TableCell>
-            </TableRow>
-          </TableHead> */}
           <TableBody classes={{ root: classes.tableBody }}>
             {data.results.map(
-              ({
-                _score,
-                id,
-                game,
-                website,
-                race,
-                price,
-                faction,
-                link,
-                name,
-                title,
-                inStockQuantity,
-              }) => (
-                <TableRow key={id}>
-                  <TableCell align="left">{toName(name, title)}</TableCell>
-                  <TableCell align="left">{race}</TableCell>
-                  <TableCell align="left">{website}</TableCell>
-                  <TableCell align="left">{price}</TableCell>
+              (
+                {
+                  _score,
+                  id,
+                  game,
+                  website,
+                  race,
+                  price,
+                  faction,
+                  link,
+                  name,
+                  title,
+                  inStockQuantity,
+                },
+                i
+              ) => (
+                <TableRow
+                  style={
+                    i % 2
+                      ? { background: "rgba(255, 255, 255, 0.05)" }
+                      : { background: "rgba(255, 255, 255, 0)" }
+                  }
+                  key={id}
+                >
+                  <TableCell classes={{ root: classes.tableCell }} align="left">
+                    {toName(name, title)}
+                  </TableCell>
+                  <TableCell classes={{ root: classes.tableBody }} align="left">
+                    {race}
+                  </TableCell>
+                  <TableCell classes={{ root: classes.tableBody }} align="left">
+                    {formatWebsite(website)}
+                  </TableCell>
+                  <TableCell classes={{ root: classes.tableBody }} align="left">
+                    {formatCurrency(price)}
+                  </TableCell>
                 </TableRow>
               )
             )}
