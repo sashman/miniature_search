@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => res.send("ok"));
-app.get("/search", search(client));
+app.post("/search", search(client));
 app.get("/available_filters", availableFilters(client));
 
 app.listen(port, () =>

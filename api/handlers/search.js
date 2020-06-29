@@ -19,7 +19,8 @@ const query = (input, filters) => ({
   query: {
     multi_match: {
       query: input,
-      fields: ["title^2", "name^2", "race", "faction", "game"],
+      type: "most_fields",
+      fields: ["title^3", "name^3", "race^2", "faction", "game"],
     },
   },
 });
@@ -31,12 +32,45 @@ const getResults = async (esClient, input, filters) => {
     };
   }
 
-  const response = await esClient.search({
+  const results = await esClient.search({
     index: "miniatures",
     filter_path:
       "hits.hits._id,hits.hits._score,hits.hits.highlight,hits.hits._source,hits.total",
     body: query(input, filters),
   });
 
-  return response.body;
+  const response = {
+    total: results.body.hits.total.value,
+    results: results.body.hits.hits.map(
+      ({
+        _score,
+        _id,
+        _source: {
+          game,
+          website,
+          race,
+          price,
+          faction,
+          link,
+          name,
+          title,
+          inStockQuantity,
+        },
+      }) => ({
+        _score,
+        id: _id,
+        game,
+        website,
+        race,
+        price,
+        faction,
+        link,
+        name,
+        title,
+        inStockQuantity,
+      })
+    ),
+  };
+
+  return response;
 };
