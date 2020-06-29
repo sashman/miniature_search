@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     minWidth: "300px",
   },
+
+  topLevelFilter: {
+    borderRadius: 0,
+  },
 }));
 
 const Loading = () => <CircularProgress />;
@@ -83,9 +87,10 @@ const TopLevelFilter = ({ label, nestedFilters, classes }) => {
         color="primary"
         deleteIcon={<ExpandMoreIcon />}
         onDelete={handleClick}
-        style={{ margin: "10px" }}
+        style={{ margin: "10px", marginLeft: "1px", marginRight: "1px" }}
         aria-describedby={`${id}_${label}`}
         clickable={false}
+        classes={{ root: classes.topLevelFilter }}
         label={
           <FormControlLabel
             aria-label="Acknowledge"
