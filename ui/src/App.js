@@ -4,9 +4,11 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Typography from "@material-ui/core/Typography";
 import useFetch from "use-http";
 
 import Filters from "./filters/Filters";
+import AppliedFilters from "./filters/AppliedFilters";
 import Results from "./results/Results";
 
 const theme = createMuiTheme({
@@ -36,6 +38,7 @@ const Loading = () => <CircularProgress />;
 function App() {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeFilters, setActiveFilters] = useState({});
   const options = {
     body: {
       input: searchTerm,
@@ -45,14 +48,11 @@ function App() {
   const { post, response, loading, error } = useFetch("http://localhost:3000");
 
   const search = async () => {
-    console.log(searchTerm);
-
     if (!searchTerm) {
       return;
     }
 
     const results = await post("/search", options.body);
-    console.log(results);
 
     if (response.ok) setResults(results);
   };
@@ -77,6 +77,12 @@ function App() {
               }}
               InputProps={{
                 onChange: (event) => setSearchTerm(event.target.value),
+                onKeyPress: (event) => {
+                  if (event.key === "Enter") {
+                    search();
+                    event.preventDefault();
+                  }
+                },
               }}
             />
             <Button
@@ -88,9 +94,18 @@ function App() {
               Search
             </Button>
           </form>
-          <Filters />
-
-          {loading ? <Loading /> : <Results data={results} />}
+          <Filters
+            activeFilters={activeFilters}
+            setActiveFilters={setActiveFilters}
+          />
+          <AppliedFilters activeFilters={activeFilters} />
+          {error && (
+            <Typography style={{ margin: "10px" }} color="secondary">
+              Error loading results...
+            </Typography>
+          )}
+          {loading && <Loading />}
+          {!error && !loading && <Results data={results} />}
         </header>
       </ThemeProvider>
     </div>

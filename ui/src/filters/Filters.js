@@ -68,7 +68,7 @@ const NestedExpansionPanel = ({ label, children, classes }) =>
     </div>
   );
 
-const TopLevelFilter = ({ label, nestedFilters, classes }) => {
+const TopLevelFilter = ({ label, nestedFilters, classes, toggleFilter }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -80,6 +80,11 @@ const TopLevelFilter = ({ label, nestedFilters, classes }) => {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const onChecked = (value, type) => (event) => {
+    const { checked } = event.target;
+    toggleFilter(value, type, checked);
+  };
 
   return (
     <div>
@@ -96,7 +101,7 @@ const TopLevelFilter = ({ label, nestedFilters, classes }) => {
             aria-label="Acknowledge"
             onClick={(event) => event.stopPropagation()}
             onFocus={(event) => event.stopPropagation()}
-            control={<Checkbox />}
+            control={<Checkbox onChange={onChecked(label, "game")} />}
             label={label}
           />
         }
@@ -138,8 +143,20 @@ const TopLevelFilter = ({ label, nestedFilters, classes }) => {
   );
 };
 
-function Filters() {
+function Filters({ setActiveFilters, activeFilters }) {
   const classes = useStyles();
+
+  const toggleFilter = (value, type, enabled) => {
+    if (enabled) {
+      setActiveFilters({
+        ...activeFilters,
+        [value]: type,
+      });
+    } else {
+      const { [value]: type, ...newActiveFilters } = activeFilters;
+      setActiveFilters(newActiveFilters);
+    }
+  };
 
   const { loading, error, data } = useFetch(
     "http://localhost:3000/available_filters",
@@ -167,9 +184,9 @@ function Filters() {
             classes={classes}
             key={label}
             label={label}
+            toggleFilter={toggleFilter}
             nestedFilters={factions.map((faction) => ({
               label: faction.name,
-              children: [],
               children: faction.races.map((race) => ({ label: race.name })),
             }))}
           />
