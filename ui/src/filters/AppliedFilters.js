@@ -6,8 +6,8 @@ function AppliedFilters({ activeFilters }) {
     <div className="AppliedFilters">
       {Object.keys(activeFilters).map((name) => (
         <Chip
-          key={`${activeFilters[name]}:${name}`}
-          label={`${activeFilters[name]}:${name}`}
+          key={`${name}`}
+          label={`${name}`}
           // onDelete={handleDelete}
           color="primary"
           variant="outlined"

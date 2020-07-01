@@ -31,7 +31,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Loading = () => <CircularProgress />;
-const NestedExpansionPanel = ({ label, children, classes }) =>
+
+const FilterCheckBox = ({ label, type, onChecked }) => (
+  <FormControlLabel
+    aria-label="Acknowledge"
+    onClick={(event) => event.stopPropagation()}
+    onFocus={(event) => event.stopPropagation()}
+    control={<Checkbox onChange={onChecked(label, type)} />}
+    label={label}
+  />
+);
+
+const NestedExpansionPanel = ({ label, children, classes, onChecked }) =>
   children ? (
     <ExpansionPanel>
       <ExpansionPanelSummary
@@ -40,13 +51,7 @@ const NestedExpansionPanel = ({ label, children, classes }) =>
         aria-controls="additional-actions1-content"
         id="additional-actions1-header"
       >
-        <FormControlLabel
-          aria-label="Acknowledge"
-          onClick={(event) => event.stopPropagation()}
-          onFocus={(event) => event.stopPropagation()}
-          control={<Checkbox />}
-          label={label}
-        />
+        <FilterCheckBox label={label} type={"faction"} onChecked={onChecked} />
       </ExpansionPanelSummary>
       <ExpansionPanelDetails
         classes={{
@@ -58,13 +63,7 @@ const NestedExpansionPanel = ({ label, children, classes }) =>
     </ExpansionPanel>
   ) : (
     <div>
-      <FormControlLabel
-        aria-label="Acknowledge"
-        onClick={(event) => event.stopPropagation()}
-        onFocus={(event) => event.stopPropagation()}
-        control={<Checkbox />}
-        label={label}
-      />
+      <FilterCheckBox label={label} type={"race"} onChecked={onChecked} />
     </div>
   );
 
@@ -97,13 +96,7 @@ const TopLevelFilter = ({ label, nestedFilters, classes, toggleFilter }) => {
         clickable={false}
         classes={{ root: classes.topLevelFilter }}
         label={
-          <FormControlLabel
-            aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-            control={<Checkbox onChange={onChecked(label, "game")} />}
-            label={label}
-          />
+          <FilterCheckBox label={label} type={"game"} onChecked={onChecked} />
         }
       />
 
@@ -129,11 +122,13 @@ const TopLevelFilter = ({ label, nestedFilters, classes, toggleFilter }) => {
             key={label}
             label={label}
             classes={classes}
+            onChecked={onChecked}
             children={children.map(({ label }) => (
               <NestedExpansionPanel
                 classes={classes}
                 key={label}
                 label={label}
+                onChecked={onChecked}
               />
             ))}
           />
@@ -147,13 +142,14 @@ function Filters({ setActiveFilters, activeFilters }) {
   const classes = useStyles();
 
   const toggleFilter = (value, type, enabled) => {
+    const key = `${type}:${value}`;
     if (enabled) {
       setActiveFilters({
         ...activeFilters,
-        [value]: type,
+        [key]: type,
       });
     } else {
-      const { [value]: type, ...newActiveFilters } = activeFilters;
+      const { [key]: type, ...newActiveFilters } = activeFilters;
       setActiveFilters(newActiveFilters);
     }
   };
