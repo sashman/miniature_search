@@ -11,6 +11,8 @@ import Filters from "./filters/Filters";
 import AppliedFilters from "./filters/AppliedFilters";
 import Results from "./results/Results";
 
+import { apiUrl } from "./config";
+
 const theme = createMuiTheme({
   overrides: {
     MuiFormLabel: {
@@ -34,18 +36,28 @@ const theme = createMuiTheme({
 });
 
 const Loading = () => <CircularProgress />;
-
 function App() {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilters, setActiveFilters] = useState({});
+
+  const filtersToQuery = () => {
+    return Object.keys(activeFilters).map((activeFilterKey) => {
+      const name = activeFilters[activeFilterKey];
+      const value = activeFilterKey.replace(`${name}:`, "");
+
+      return { [name]: value };
+    });
+  };
+
   const options = {
     body: {
       input: searchTerm,
+      filters: filtersToQuery(),
     },
     headers: { "Content-Type": "application/json" },
   };
-  const { post, response, loading, error } = useFetch("http://localhost:3000");
+  const { post, response, loading, error } = useFetch(apiUrl);
 
   const search = async () => {
     if (!searchTerm) {

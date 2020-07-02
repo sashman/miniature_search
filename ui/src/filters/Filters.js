@@ -11,6 +11,7 @@ import Popover from "@material-ui/core/Popover";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import useFetch from "use-http";
+import { apiUrl } from "../config";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -189,7 +190,7 @@ function Filters({ setActiveFilters, activeFilters }) {
   };
 
   const { loading, error, data } = useFetch(
-    "http://localhost:3000/available_filters",
+    `${apiUrl}/available_filters`,
     {},
     []
   );
