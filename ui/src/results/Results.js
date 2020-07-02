@@ -5,6 +5,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
+import Link from "@material-ui/core/Link";
+import LaunchIcon from "@material-ui/icons/Launch";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -80,6 +82,11 @@ function Results({ data }) {
                   </TableCell>
                   <TableCell classes={{ root: classes.tableBody }} align="left">
                     {formatCurrency(price)}
+                  </TableCell>
+                  <TableCell classes={{ root: classes.tableBody }} align="left">
+                    <Link target="_blank" href={link}>
+                      <LaunchIcon />
+                    </Link>
                   </TableCell>
                 </TableRow>
               )
