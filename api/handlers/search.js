@@ -22,9 +22,7 @@ const query = (input, filters) => ({
         ? {
             filter: filters.map((filter) => ({
               term: {
-                [`${Object.keys(filter)[0]}.keyword`]: filter[
-                  Object.keys(filter)[0]
-                ],
+                [`${Object.keys(filter)[0]}.keyword`]: Object.values(filter)[0],
               },
             })),
           }
@@ -48,6 +46,7 @@ const getResults = async (esClient, input, filters) => {
   }
 
   const body = query(input, filters);
+  console.log(body.query.bool.filter);
 
   const results = await esClient.search({
     index: "miniatures",
