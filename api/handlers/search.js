@@ -17,10 +17,25 @@ const query = (input, filters) => ({
     "game",
   ],
   query: {
-    multi_match: {
-      query: input,
-      type: "most_fields",
-      fields: ["title^3", "name^3", "race^2", "faction", "game"],
+    bool: {
+      ...(filters
+        ? {
+            filter: filters.map((filter) => ({
+              term: {
+                [`${Object.keys(filter)[0]}.keyword`]: filter[
+                  Object.keys(filter)[0]
+                ],
+              },
+            })),
+          }
+        : {}),
+      must: {
+        multi_match: {
+          query: input,
+          type: "most_fields",
+          fields: ["title^3", "name^3", "race^2", "faction", "game"],
+        },
+      },
     },
   },
 });
@@ -32,44 +47,48 @@ const getResults = async (esClient, input, filters) => {
     };
   }
 
+  const body = query(input, filters);
+
   const results = await esClient.search({
     index: "miniatures",
     filter_path:
       "hits.hits._id,hits.hits._score,hits.hits.highlight,hits.hits._source,hits.total",
-    body: query(input, filters),
+    body,
   });
 
   const response = {
     total: results.body.hits.total.value,
-    results: results.body.hits.hits.map(
-      ({
-        _score,
-        _id,
-        _source: {
-          game,
-          website,
-          race,
-          price,
-          faction,
-          link,
-          name,
-          title,
-          inStockQuantity,
-        },
-      }) => ({
-        _score,
-        id: _id,
-        game,
-        website,
-        race,
-        price,
-        faction,
-        link,
-        name,
-        title,
-        inStockQuantity,
-      })
-    ),
+    results: results.body.hits.hits
+      ? results.body.hits.hits.map(
+          ({
+            _score,
+            _id,
+            _source: {
+              game,
+              website,
+              race,
+              price,
+              faction,
+              link,
+              name,
+              title,
+              inStockQuantity,
+            },
+          }) => ({
+            _score,
+            id: _id,
+            game,
+            website,
+            race,
+            price,
+            faction,
+            link,
+            name,
+            title,
+            inStockQuantity,
+          })
+        )
+      : [],
   };
 
   return response;
