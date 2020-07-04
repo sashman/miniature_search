@@ -1,7 +1,9 @@
 const puppeteer = require("puppeteer");
 const { sleep } = require("usleep");
 const { Client } = require("@elastic/elasticsearch");
-const client = new Client({ node: "http://localhost:9220" });
+const config = require("./config");
+const client = new Client({ node: config.elasticsearch_endpoint });
+const { setUpIndex, insertContent, flatten } = require("./common");
 
 const chromeOptions = {
   headless: false,
@@ -10,6 +12,8 @@ const chromeOptions = {
 const rootUrl = "https://www.games-workshop.com";
 
 (async function main() {
+  await setUpIndex(client);
+
   const games = [
     {
       title: "Warhammer Age of Sigmar",
@@ -214,6 +218,7 @@ const rootUrl = "https://www.games-workshop.com";
       (game, faction, race, rootUrl) => {
         const productNodes = document.querySelectorAll("li.product-item");
         return Object.values(productNodes).map((productNode) => {
+          const date = new Date();
           const nameNode = productNode.querySelector("a.product-item__name");
 
           const gtmProductfieldobject = nameNode.getAttribute(
@@ -238,6 +243,7 @@ const rootUrl = "https://www.games-workshop.com";
             id,
             categories,
             website: rootUrl.replace("https://", ""),
+            date: date.toISOString(),
           };
         });
       },
@@ -246,14 +252,6 @@ const rootUrl = "https://www.games-workshop.com";
       race,
       rootUrl
     );
-  };
-
-  const flatten = (arr) => {
-    return arr.reduce(function (flat, toFlatten) {
-      return flat.concat(
-        Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten
-      );
-    }, []);
   };
 
   const url = (gameUrlPath, factionCode, raceCode) =>
@@ -281,16 +279,7 @@ const rootUrl = "https://www.games-workshop.com";
       combination.race.title
     );
     console.log(content.length);
-    const body = flatten(
-      content.map((doc) => [
-        [{ index: { _index: "miniatures", _id: doc.id } }, doc],
-      ])
-    );
-
-    await client.bulk({
-      index: "miniatures",
-      body,
-    });
+    await insertContent(client, content);
 
     const duration = Math.floor(Math.random() * 30);
     console.log(`Sleeping for ${duration}s`);

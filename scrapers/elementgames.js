@@ -1,12 +1,16 @@
 const { sleep } = require("usleep");
 const fetch = require("node-fetch");
 const { parse } = require("node-html-parser");
+const config = require("./config");
 const { Client } = require("@elastic/elasticsearch");
-const client = new Client({ node: "http://localhost:9220" });
+const client = new Client({ node: config.elasticsearch_endpoint });
+const { setUpIndex, insertContent, flatten } = require("./common");
 
 const rootUrl = "https://elementgames.co.uk";
 
 (async function main() {
+  await setUpIndex(client);
+
   const games = [
     {
       title: "Warhammer Age of Sigmar",
@@ -225,6 +229,7 @@ const rootUrl = "https://elementgames.co.uk";
 
     const productNodes = document.querySelectorAll("div.productgrid");
     return productNodes.map((productNode) => {
+      const date = new Date();
       const nameNode = productNode.querySelector("h3.producttitle");
       const name = nameNode.text;
       const imgNode = productNode.querySelector("img.productimage");
@@ -256,6 +261,7 @@ const rootUrl = "https://elementgames.co.uk";
         name,
         inStockQuantity,
         website: rootUrl.replace("https://", ""),
+        date: date.toISOString(),
       };
     });
   };
@@ -286,20 +292,10 @@ const rootUrl = "https://elementgames.co.uk";
 
     const page = await fetch(urlString).then((res) => res.text());
     const content = getProducts(page, game, faction, race);
-    // console.log(content);
 
     console.log(game.title, faction.title, race.title);
     console.log(content.length);
-    const body = flatten(
-      content.map((doc) => [
-        [{ index: { _index: "miniatures", _id: doc.id } }, doc],
-      ])
-    );
-
-    await client.bulk({
-      index: "miniatures",
-      body,
-    });
+    await insertContent(client, content);
 
     const duration = Math.floor(Math.random() * 30);
     console.log(`Sleeping for ${duration}s`);
