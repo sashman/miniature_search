@@ -46,7 +46,6 @@ const getResults = async (esClient, input, filters) => {
   }
 
   const body = query(input, filters);
-  console.log(body.query.bool.filter);
 
   const results = await esClient.search({
     index: "miniatures",
