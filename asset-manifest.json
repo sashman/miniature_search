@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/miniature_search/static/css/main.00d4951b.chunk.css",
-    "main.js": "/miniature_search/static/js/main.35d73af8.chunk.js",
-    "main.js.map": "/miniature_search/static/js/main.35d73af8.chunk.js.map",
+    "main.js": "/miniature_search/static/js/main.814c7522.chunk.js",
+    "main.js.map": "/miniature_search/static/js/main.814c7522.chunk.js.map",
     "runtime-main.js": "/miniature_search/static/js/runtime-main.54247aec.js",
     "runtime-main.js.map": "/miniature_search/static/js/runtime-main.54247aec.js.map",
     "static/js/2.22f3b6e0.chunk.js": "/miniature_search/static/js/2.22f3b6e0.chunk.js",
     "static/js/2.22f3b6e0.chunk.js.map": "/miniature_search/static/js/2.22f3b6e0.chunk.js.map",
     "index.html": "/miniature_search/index.html",
-    "precache-manifest.765ffaebfca82badd761d3905aaebcaa.js": "/miniature_search/precache-manifest.765ffaebfca82badd761d3905aaebcaa.js",
+    "precache-manifest.b5ab4e41c9e1f37347eb2a19d01f7cdd.js": "/miniature_search/precache-manifest.b5ab4e41c9e1f37347eb2a19d01f7cdd.js",
     "service-worker.js": "/miniature_search/service-worker.js",
     "static/css/main.00d4951b.chunk.css.map": "/miniature_search/static/css/main.00d4951b.chunk.css.map",
     "static/js/2.22f3b6e0.chunk.js.LICENSE.txt": "/miniature_search/static/js/2.22f3b6e0.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.54247aec.js",
     "static/js/2.22f3b6e0.chunk.js",
     "static/css/main.00d4951b.chunk.css",
-    "static/js/main.35d73af8.chunk.js"
+    "static/js/main.814c7522.chunk.js"
   ]
 }
