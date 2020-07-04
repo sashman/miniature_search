@@ -1,2 +1,1 @@
-export const apiUrl = "http://localhost:3000";
-// export const apiUrl = "http://d94a70994b5c.ngrok.io";
+export const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
