@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Helmet } from "react-helmet";
+import MetaTags from "react-meta-tags";
 import "./App.css";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -15,7 +15,6 @@ import Results from "./results/Results";
 import { apiUrl } from "./config";
 
 const title = "Miniature Search";
-const description = "Search for miniatures across the internet";
 
 const theme = createMuiTheme({
   overrides: {
@@ -75,10 +74,9 @@ function App() {
 
   return (
     <div className="App">
-      <Helmet>
+      <MetaTags>
         <title>{title}</title>
-        <meta name="description" content={description} />
-      </Helmet>
+      </MetaTags>
       <ThemeProvider theme={theme}>
         <header className="App-header">
           <form
