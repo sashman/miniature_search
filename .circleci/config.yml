@@ -1,6 +1,8 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  heroku: circleci/heroku@1.0.1
+
 jobs:
   build-and-test:
     executor:
@@ -11,7 +13,16 @@ jobs:
           steps:
             - run: npm install
             - run: npm test
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
 workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+  build-and-test:
+    jobs:
+      - build-and-test
+      - deploy:
+          requires:
+            - build-and-test
