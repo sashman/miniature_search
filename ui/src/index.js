@@ -15,7 +15,7 @@ const tagManagerArgs = {
 
 TagManager.initialize(tagManagerArgs);
 
-ReactGA.initialize("gaId");
+ReactGA.initialize(gaId);
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 ReactDOM.render(
