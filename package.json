@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd api && npm install"
+    "build": "cd api && npm install",
+    "build:ui": "cd ui && npm install"
   },
   "author": "",
   "license": "ISC"
