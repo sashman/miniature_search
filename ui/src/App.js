@@ -112,6 +112,7 @@ function App() {
                 <img
                   src="logo192.png"
                   className="App-logo"
+                  alt="Logo"
                   style={{
                     verticalAlign: "middle",
                     maxHeight: "40px",
