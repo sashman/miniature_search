@@ -1,6 +1,11 @@
 module.exports = {
   availableFilters: (esClient) => async (req, res) => {
-    return res.json(await getFilters(esClient));
+    try {
+      const filters = await getFilters(esClient);
+      return res.json(filters);
+    } catch (error) {
+      return res.status(502).json({ error });
+    }
   },
 };
 

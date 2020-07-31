@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tableCell: {
     color: "white",
+    padding: "6px",
   },
 }));
 

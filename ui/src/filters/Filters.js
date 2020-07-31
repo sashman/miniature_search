@@ -12,10 +12,12 @@ import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import useFetch from "use-http";
 import { apiUrl } from "../config";
+import { Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    justifyContent: "center",
     "& > * + *": {
       marginLeft: theme.spacing(2),
     },
@@ -114,7 +116,6 @@ const TopLevelFilter = ({
         color="primary"
         deleteIcon={<ExpandMoreIcon />}
         onDelete={handleClick}
-        style={{ margin: "10px", marginLeft: "1px", marginRight: "1px" }}
         aria-describedby={`${id}_${label}`}
         clickable={false}
         classes={{ root: classes.topLevelFilter }}
@@ -209,21 +210,24 @@ function Filters({ setActiveFilters, activeFilters }) {
 
   return (
     <div className={classes.root}>
-      {data.map(({ name: label, factions }) => {
-        return (
-          <TopLevelFilter
-            classes={classes}
-            key={label}
-            label={label}
-            toggleFilter={toggleFilter}
-            checked={checked}
-            nestedFilters={factions.map((faction) => ({
-              label: faction.name,
-              children: faction.races.map((race) => ({ label: race.name })),
-            }))}
-          />
-        );
-      })}
+      <Grid container spacing={1}>
+        {data.map(({ name: label, factions }) => {
+          return (
+            <Grid key={label} item md={4} xs={12}>
+              <TopLevelFilter
+                classes={classes}
+                label={label}
+                toggleFilter={toggleFilter}
+                checked={checked}
+                nestedFilters={factions.map((faction) => ({
+                  label: faction.name,
+                  children: faction.races.map((race) => ({ label: race.name })),
+                }))}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
     </div>
   );
 }

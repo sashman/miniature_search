@@ -13,6 +13,8 @@ import AppliedFilters from "./filters/AppliedFilters";
 import Results from "./results/Results";
 
 import { apiUrl } from "./config";
+import { Container } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 
 const title = "Miniature Search";
 
@@ -22,6 +24,14 @@ const theme = createMuiTheme({
       // Name of the rule
       root: {
         color: "white",
+      },
+    },
+    MuiButton: {
+      // Name of the rule
+      root: {
+        minWidth: null,
+        margin: "10px",
+        padding: "16px",
       },
     },
     MuiInput: {
@@ -79,51 +89,66 @@ function App() {
       </MetaTags>
       <ThemeProvider theme={theme}>
         <header className="App-header">
-          <form
-            noValidate
-            autoComplete="off"
-            style={{
-              width: "50%",
-              paddingTop: "8%",
-            }}
-          >
-            <TextField
-              label="Search"
+          <Container maxWidth="md">
+            <div
               style={{
-                width: "80%",
-                verticalAlign: "bottom",
+                paddingTop: "7%",
               }}
-              InputProps={{
-                onChange: (event) => setSearchTerm(event.target.value),
-                onKeyPress: (event) => {
-                  if (event.key === "Enter") {
-                    search();
-                    event.preventDefault();
-                  }
-                },
+            ></div>
+            <div
+              style={{
+                alignItems: "center",
               }}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ marginLeft: "10px" }}
-              onClick={search}
             >
-              Search
-            </Button>
-          </form>
-          <Filters
-            activeFilters={activeFilters}
-            setActiveFilters={setActiveFilters}
-          />
-          <AppliedFilters activeFilters={activeFilters} />
-          {error && (
-            <Typography style={{ margin: "10px" }} color="secondary">
-              Error loading results...
-            </Typography>
-          )}
-          {loading && <Loading />}
-          {!error && !loading && <Results data={results} />}
+              <form
+                style={{
+                  verticalAlign: "middle",
+
+                  display: "flex",
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <img
+                  src="logo192.png"
+                  className="App-logo"
+                  style={{
+                    verticalAlign: "middle",
+                    maxHeight: "40px",
+                    padding: "15px",
+                  }}
+                />
+                <TextField
+                  label="Search"
+                  fullWidth
+                  InputProps={{
+                    onChange: (event) => setSearchTerm(event.target.value),
+                    onKeyPress: (event) => {
+                      if (event.key === "Enter") {
+                        search();
+                        event.preventDefault();
+                      }
+                    },
+                  }}
+                />
+                <Button variant="contained" color="primary" onClick={search}>
+                  <SearchIcon fontSize="small" />
+                </Button>
+              </form>
+            </div>
+            <Filters
+              activeFilters={activeFilters}
+              setActiveFilters={setActiveFilters}
+            />
+            <AppliedFilters activeFilters={activeFilters} />
+            {error && (
+              <Typography style={{ margin: "10px" }} color="secondary">
+                Error loading results...
+              </Typography>
+            )}
+            {loading && <Loading />}
+            {!error && !loading && <Results data={results} />}
+          </Container>
         </header>
       </ThemeProvider>
     </div>
