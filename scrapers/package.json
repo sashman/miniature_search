@@ -12,5 +12,8 @@
     "node-html-parser": "^1.2.20",
     "puppeteer": "^5.0.0",
     "usleep": "^1.0.3"
+  },
+  "engines": {
+    "node": "14.x"
   }
 }

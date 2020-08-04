@@ -49,6 +49,19 @@ const theme = createMuiTheme({
 });
 
 const Loading = () => <CircularProgress />;
+const Logo = () => (
+  <img
+    src="logo192.png"
+    className="App-logo"
+    alt="Logo"
+    style={{
+      verticalAlign: "middle",
+      maxHeight: "40px",
+      padding: "15px",
+    }}
+  />
+);
+
 function App() {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -103,22 +116,12 @@ function App() {
               <form
                 style={{
                   verticalAlign: "middle",
-
                   display: "flex",
                 }}
                 noValidate
                 autoComplete="off"
               >
-                <img
-                  src="logo192.png"
-                  className="App-logo"
-                  alt="Logo"
-                  style={{
-                    verticalAlign: "middle",
-                    maxHeight: "40px",
-                    padding: "15px",
-                  }}
-                />
+                <Logo />
                 <TextField
                   label="Search"
                   fullWidth

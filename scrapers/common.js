@@ -1,7 +1,7 @@
 const fs = require("fs");
-const config = require("./config");
+const config = require(`${__dirname}/config`);
 const indexName = "miniatures";
-const mapping = fs.readFileSync("./mapping.json");
+const mapping = fs.readFileSync(`${__dirname}/mapping.json`);
 
 const setUpIndex = async (client) => {
   console.log(`Writing to ${config.elasticsearch_endpoint}`);
