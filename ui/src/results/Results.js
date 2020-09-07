@@ -88,7 +88,10 @@ function Results({ data }) {
                       style={{ verticalAlign: "middle" }}
                     >
                       {formatWebsite(website)}{" "}
-                      <LaunchIcon style={{ verticalAlign: "middle" }} />
+                      <LaunchIcon
+                        style={{ verticalAlign: "middle" }}
+                        fontSize="small"
+                      />
                     </Link>
                   </TableCell>
                 </TableRow>
