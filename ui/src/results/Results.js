@@ -79,14 +79,16 @@ function Results({ data }) {
                     {race}
                   </TableCell>
                   <TableCell classes={{ root: classes.tableBody }} align="left">
-                    {formatWebsite(website)}
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableBody }} align="left">
                     {formatCurrency(price)}
                   </TableCell>
                   <TableCell classes={{ root: classes.tableBody }} align="left">
-                    <Link target="_blank" href={link}>
-                      <LaunchIcon />
+                    <Link
+                      target="_blank"
+                      href={link}
+                      style={{ verticalAlign: "middle" }}
+                    >
+                      {formatWebsite(website)}{" "}
+                      <LaunchIcon style={{ verticalAlign: "middle" }} />
                     </Link>
                   </TableCell>
                 </TableRow>

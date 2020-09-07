@@ -124,6 +124,7 @@ function App() {
                 <Logo />
                 <TextField
                   label="Search"
+                  placeholder="Space Marines"
                   fullWidth
                   autoFocus
                   InputProps={{
