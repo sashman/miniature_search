@@ -12,11 +12,16 @@ const setUpIndex = async (client) => {
     flat_settings: true,
   });
 
-  !exists &&
-    (await client.indices.create({
-      index: indexName,
-      body: mapping,
-    }));
+  try {
+    !exists &&
+      (await client.indices.create({
+        index: indexName,
+        body: mapping,
+      }));
+  } catch (error) {
+    console.log(error.meta.body.error);
+    throw new Error("Unable to create index");
+  }
 };
 
 const flatten = (arr) => {

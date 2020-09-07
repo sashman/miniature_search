@@ -427,7 +427,7 @@ const rootUrl = "https://www.waylandgames.co.uk";
 
       console.log(game.title, faction.title, race.title);
       console.log(content.length);
-      // await insertContent(client, content);
+      await insertContent(client, content);
 
       const duration = Math.floor(Math.random() * 30);
       console.log(`Sleeping for ${duration}s`);
