@@ -125,6 +125,7 @@ function App() {
                 <TextField
                   label="Search"
                   fullWidth
+                  autoFocus
                   InputProps={{
                     onChange: (event) => setSearchTerm(event.target.value),
                     onKeyPress: (event) => {
