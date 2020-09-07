@@ -26,32 +26,25 @@ const query = (input, filters) => ({
     },
   },
   aggs: {
-    website_results: {
+    latest_results: {
       terms: {
-        field: "website.keyword",
+        script: "doc['name.keyword'].value +'-'+ doc['website.keyword'].value",
+        order: {
+          maximum_score: "desc",
+        },
       },
       aggs: {
-        latest_results: {
-          terms: {
-            field: "name.keyword",
-            order: {
-              maximum_score: "desc",
+        maximum_score: {
+          max: {
+            script: {
+              source: "_score",
             },
           },
-          aggs: {
-            maximum_score: {
-              max: {
-                script: {
-                  source: "_score",
-                },
-              },
-            },
-            hits: {
-              top_hits: {
-                size: 1,
-                sort: [{ date: "desc" }],
-              },
-            },
+        },
+        hits: {
+          top_hits: {
+            size: 1,
+            sort: [{ date: "desc" }],
           },
         },
       },
@@ -70,27 +63,23 @@ const getResults = async (esClient, input, filters) => {
 
   const results = await esClient.search({
     index: "miniatures",
-    filter_path:
-      "hits.hits._id,hits.hits._score,hits.hits.highlight,hits.hits._source,hits.total,aggregations",
+    // filter_path:
+    //   "hits.hits._id,hits.hits._score,hits.hits.highlight,hits.hits._source,hits.total,aggregations",
     body,
   });
 
   const {
     body: {
       aggregations: {
-        website_results: { buckets },
+        latest_results: { buckets },
       },
     },
   } = results;
 
-  const flatBuckets = buckets
-    .map((bucket) => bucket.latest_results.buckets)
-    .flat();
-
   const response = {
     total: 0,
-    results: flatBuckets
-      ? flatBuckets.map(
+    results: buckets
+      ? buckets.map(
           ({
             hits: {
               hits: {
