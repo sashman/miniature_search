@@ -86,10 +86,6 @@ function App() {
   const { post, response, loading, error } = useFetch(apiUrl);
 
   const search = async () => {
-    if (!searchTerm) {
-      return;
-    }
-
     const results = await post("/search", options.body);
 
     if (response.ok) setResults(results);
