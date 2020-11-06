@@ -7,6 +7,7 @@
     "start:api": "ELASTICSEARCH_ENDPOINT=http://localhost:9220 nodemon api",
     "build": "cd api && npm install",
     "build:ui": "cd ui && npm install && npm run-script build"
+    "test": "echo No tests yet"
   },
   "author": "",
   "license": "ISC"
