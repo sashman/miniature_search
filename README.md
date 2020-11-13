@@ -1,5 +1,7 @@
 # miniature_search
 
+Small, helpful project. I hope it helps others. 
+
 # Demo
 
-https://sashman.github.io/miniature_search/
+[http://minisear.ch/](http://minisear.ch/)
