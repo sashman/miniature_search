@@ -98,7 +98,7 @@ function App() {
       </MetaTags>
       <ThemeProvider theme={theme}>
         <header className="App-header">
-          <Container maxWidth="md">
+          <Container maxWidth="md" style={{ flex: "1 0 auto" }} >
             <div
               style={{
                 paddingTop: "7%",
@@ -149,11 +149,16 @@ function App() {
               </Typography>
             )}
             {loading && <Loading />}
-            {!error && !loading && <Results data={results} />}
+            {!error && !loading && <Results style={{
+              minHeight: "70%"
+            }} data={results} />}
+
           </Container>
+          <div className="footer">Created by sashman90@gmail.com</div>
+
         </header>
       </ThemeProvider>
-    </div>
+    </div >
   );
 }
 

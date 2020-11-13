@@ -64,44 +64,44 @@ function Results({ data }) {
                 },
                 i
               ) => (
-                <TableRow
-                  style={
-                    i % 2
-                      ? { background: "rgba(255, 255, 255, 0.05)" }
-                      : { background: "rgba(255, 255, 255, 0)" }
-                  }
-                  key={id}
-                >
-                  <TableCell classes={{ root: classes.tableCell }} align="left">
-                    {toName(name, title)}
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableBody }} align="left">
-                    {race}
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableBody }} align="left">
-                    {formatCurrency(price)}
-                  </TableCell>
-                  <TableCell classes={{ root: classes.tableBody }} align="left">
-                    <Link
-                      target="_blank"
-                      href={link}
-                      style={{ verticalAlign: "middle" }}
-                    >
-                      {formatWebsite(website)}{" "}
-                      <LaunchIcon
+                  <TableRow
+                    style={
+                      i % 2
+                        ? { background: "rgba(255, 255, 255, 0.05)" }
+                        : { background: "rgba(255, 255, 255, 0)" }
+                    }
+                    key={id}
+                  >
+                    <TableCell classes={{ root: classes.tableCell }} align="left">
+                      {toName(name, title)}
+                    </TableCell>
+                    <TableCell classes={{ root: classes.tableBody }} align="left">
+                      {race}
+                    </TableCell>
+                    <TableCell classes={{ root: classes.tableBody }} align="left">
+                      {formatCurrency(price)}
+                    </TableCell>
+                    <TableCell classes={{ root: classes.tableBody }} align="left">
+                      <Link
+                        target="_blank"
+                        href={link}
                         style={{ verticalAlign: "middle" }}
-                        fontSize="small"
-                      />
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              )
+                      >
+                        {formatWebsite(website)}{" "}
+                        <LaunchIcon
+                          style={{ verticalAlign: "middle" }}
+                          fontSize="small"
+                        />
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                )
             )}
           </TableBody>
         </Table>
       </TableContainer>
     </div>
-  ) : null;
+  ) : <div />;
 }
 
 export default Results;
