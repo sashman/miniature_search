@@ -15,6 +15,8 @@ import Results from "./results/Results";
 import { apiUrl } from "./config";
 import { Container } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import GitHubIcon from '@material-ui/icons/GitHub';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 
 const title = "Miniature Search";
 
@@ -154,7 +156,15 @@ function App() {
             }} data={results} />}
 
           </Container>
-          <div className="footer">Created by sashman90@gmail.com</div>
+          <div className="footer">
+            <div className="footer-left">
+              Created by <a href="mailto:sashman90@gmail.com">Sashman</a>
+            </div>
+            <div className="footer-right">
+              <a href="mailto:sashman90@gmail.com"><MailOutlineIcon fontSize="inherit"/></a>
+              <a href="https://github.com/sashman/"><GitHubIcon fontSize="inherit"/></a>
+            </div>
+          </div>
 
         </header>
       </ThemeProvider>
