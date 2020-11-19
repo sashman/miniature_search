@@ -44,7 +44,38 @@ body {
 
 .footer {
   font-size: small;
-  color: white;
+  color: #fff;
   flex-shrink: 0;
-  margin-bottom: 5px;
+  margin-bottom: 30px;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-left{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  margin-right: 5px;
+}
+
+.footer-right{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.footer div{
+  padding: 10px;
+  background-color: rgba(0,0,0,0.1);
+  display: inline-block;
+}
+
+.footer svg{
+  margin-right: 3px;
+  margin-left: 3px;
+}
+
+
+.footer a{
+  color: #7789ec;
+  text-decoration: none;
 }
