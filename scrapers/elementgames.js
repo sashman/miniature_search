@@ -20,7 +20,6 @@ const rootUrl = "https://elementgames.co.uk";
           title: "Grand Alliance Order",
           urlPath: "forces-of-order-",
           races: [
-            { title: "Aelves", urlPath: "darkling-covens" },
             { title: "Daughters of Khaine", urlPath: "daughters-of-khaine" },
             { title: "Dispossessed", urlPath: "dispossessed" },
             { title: "Cities of Sigmar", urlPath: "free-peoples" },
