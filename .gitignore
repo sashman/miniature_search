@@ -116,3 +116,5 @@ dist
 docker-elk/
 .vscode/
 .tool-versions
+
+.DS_Store
