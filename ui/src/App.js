@@ -100,7 +100,7 @@ function App() {
       </MetaTags>
       <ThemeProvider theme={theme}>
         <header className="App-header">
-          <Container maxWidth="md" style={{ flex: "1 0 auto" }} >
+          <Container maxWidth="lg" style={{ flex: "1 0 auto" }} >
             <div
               style={{
                 paddingTop: "7%",

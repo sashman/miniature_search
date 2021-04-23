@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableRow from "@material-ui/core/TableRow";
 import Link from "@material-ui/core/Link";
 import LaunchIcon from "@material-ui/icons/Launch";
+import { parseISO, differenceInDays } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -60,48 +61,65 @@ function Results({ data }) {
                   link,
                   name,
                   title,
+                  date,
                   inStockQuantity,
                 },
                 i
               ) => (
-                  <TableRow
-                    style={
-                      i % 2
-                        ? { background: "rgba(255, 255, 255, 0.05)" }
-                        : { background: "rgba(255, 255, 255, 0)" }
-                    }
-                    key={id}
-                  >
-                    <TableCell classes={{ root: classes.tableCell }} align="left">
-                      {toName(name, title)}
-                    </TableCell>
-                    <TableCell classes={{ root: classes.tableBody }} align="left">
-                      {race}
-                    </TableCell>
-                    <TableCell classes={{ root: classes.tableBody }} align="left">
+                <TableRow
+                  style={
+                    i % 2
+                      ? { background: "rgba(255, 255, 255, 0.05)" }
+                      : { background: "rgba(255, 255, 255, 0)" }
+                  }
+                  key={id}
+                >
+                  <TableCell classes={{ root: classes.tableCell }} align="left">
+                    {toName(name, title)}
+                  </TableCell>
+                  <TableCell classes={{ root: classes.tableBody }} align="left">
+                    {race}
+                  </TableCell>
+                  <TableCell classes={{ root: classes.tableBody }} align="left">
+                    <div
+                      className={classes.toolTip}
+                      title={`${differenceInDays(
+                        new Date(),
+                        parseISO(date)
+                      )} days old`}
+                    >
                       {formatCurrency(price)}
-                    </TableCell>
-                    <TableCell classes={{ root: classes.tableBody }} align="left">
-                      <Link
-                        target="_blank"
-                        href={link}
+                    </div>
+                  </TableCell>
+                  <TableCell classes={{ root: classes.tableBody }} align="left">
+                    <Link
+                      target="_blank"
+                      href={link}
+                      style={{ verticalAlign: "middle" }}
+                    >
+                      {formatWebsite(website)}{" "}
+                      <LaunchIcon
                         style={{ verticalAlign: "middle" }}
-                      >
-                        {formatWebsite(website)}{" "}
-                        <LaunchIcon
-                          style={{ verticalAlign: "middle" }}
-                          fontSize="small"
-                        />
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                )
+                        fontSize="small"
+                      />
+                    </Link>
+                  </TableCell>
+                  <TableCell
+                    classes={{ root: classes.tableBody }}
+                    align="right"
+                  >
+                    {`${differenceInDays(new Date(), parseISO(date))} days old`}
+                  </TableCell>
+                </TableRow>
+              )
             )}
           </TableBody>
         </Table>
       </TableContainer>
     </div>
-  ) : <div />;
+  ) : (
+    <div />
+  );
 }
 
 export default Results;

@@ -94,6 +94,7 @@ const getResults = async (esClient, input, filters) => {
                     link,
                     name,
                     title,
+                    date,
                     inStockQuantity,
                   },
                 },
@@ -111,6 +112,7 @@ const getResults = async (esClient, input, filters) => {
           link,
           name,
           title,
+          date,
           inStockQuantity,
         })
       )
