@@ -85,8 +85,7 @@ const rootUrl = "https://www.waylandgames.co.uk";
             },
             {
               title: "Legions of Nagash",
-              urlPath: "faction-legions_of_nagash",
-              pages: 2,
+              urlPath: "faction-legions_of_nagash"
             },
             { title: "Nighthaunt", urlPath: "faction-nighthaunt" },
             {
@@ -154,7 +153,7 @@ const rootUrl = "https://www.waylandgames.co.uk";
             {
               title: "Space Marines",
               urlPath: "faction-space_marines",
-              pages: 5,
+              pages: 6,
             },
           ],
         },
@@ -214,7 +213,7 @@ const rootUrl = "https://www.waylandgames.co.uk";
             {
               title: "Craftworlds",
               urlPath: "362-eldar-craftworlds",
-              pages: 3,
+              pages: 2,
             },
             { title: "Drukhari", urlPath: "361-dark-eldar", pages: 2 },
             {

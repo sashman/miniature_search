@@ -21,8 +21,8 @@ const rootUrl = "https://elementgames.co.uk";
           urlPath: "forces-of-order-",
           races: [
             { title: "Daughters of Khaine", urlPath: "daughters-of-khaine" },
-            { title: "Dispossessed", urlPath: "dispossessed" },
-            { title: "Cities of Sigmar", urlPath: "free-peoples" },
+            // { title: "Dispossessed", urlPath: "dispossessed" },
+            { title: "Cities of Sigmar", urlPath: "cities-of-sigmar" },
             { title: "Fyreslayers", urlPath: "fyreslayers" },
             { title: "Idoneth Deepkin", urlPath: "idoneth-deepkin" },
             {
@@ -47,7 +47,7 @@ const rootUrl = "https://elementgames.co.uk";
             { title: "Hedonites of Slaanesh", urlPath: "slaanesh" },
             { title: "Maggotkin of Nurgle", urlPath: "nurgle" },
             { title: "The Skaven", urlPath: "clan-pestilens" },
-            { title: "Slaves to Darkness", urlPath: "everchosen" },
+            { title: "Slaves to Darkness", urlPath: "slaves-to-darkness" },
           ],
         },
         {
@@ -66,7 +66,6 @@ const rootUrl = "https://elementgames.co.uk";
           races: [
             { title: "Gloomspite Gitz", urlPath: "moonclan-grots" },
             { title: "Ogor Mawtribes", urlPath: "beastclaw-raiders" },
-            { title: "Orruk Warclans", urlPath: "ironjawz" },
             { title: "Orruk Warclans", urlPath: "bonesplitterz" },
           ],
         },
