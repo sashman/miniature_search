@@ -1,7 +1,11 @@
 const fs = require("fs");
 const config = require(`${__dirname}/config`);
-const indexName = "miniatures";
-const mapping = fs.readFileSync(`${__dirname}/mapping.json`);
+const aliasName = config.indexAliasName;
+const recreateIndex = false;
+const indexName = recreateIndex
+  ? `${aliasName}-${Math.floor(new Date().getTime() / 1000)}`
+  : aliasName;
+const mapping = JSON.parse(fs.readFileSync(`${__dirname}/mapping.json`));
 
 const setUpIndex = async (client) => {
   console.log(`Writing to ${config.elasticsearch_endpoint}`);
@@ -16,7 +20,16 @@ const setUpIndex = async (client) => {
     !exists &&
       (await client.indices.create({
         index: indexName,
-        body: mapping,
+        body: {
+          ...mapping,
+          ...(recreateIndex
+            ? {
+                aliases: {
+                  [aliasName]: {},
+                },
+              }
+            : {}),
+        },
       }));
   } catch (error) {
     console.log(error.meta.body.error);

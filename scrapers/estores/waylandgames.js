@@ -5,6 +5,7 @@ const config = require("./config");
 const { Client } = require("@elastic/elasticsearch");
 const client = new Client({ node: config.elasticsearch_endpoint });
 const { setUpIndex, insertContent, flatten } = require("./common");
+const maxSleep = 0;
 
 const rootUrl = "https://www.waylandgames.co.uk";
 
@@ -85,7 +86,7 @@ const rootUrl = "https://www.waylandgames.co.uk";
             },
             {
               title: "Legions of Nagash",
-              urlPath: "faction-legions_of_nagash"
+              urlPath: "faction-legions_of_nagash",
             },
             { title: "Nighthaunt", urlPath: "faction-nighthaunt" },
             {
@@ -428,7 +429,7 @@ const rootUrl = "https://www.waylandgames.co.uk";
       console.log(content.length);
       await insertContent(client, content);
 
-      const duration = Math.floor(Math.random() * 30);
+      const duration = Math.floor(Math.random() * maxSleep);
       console.log(`Sleeping for ${duration}s`);
 
       await sleep(duration);

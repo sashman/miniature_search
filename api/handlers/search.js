@@ -1,3 +1,5 @@
+const config = require("./../config");
+
 module.exports = {
   search: (esClient) => async (req, res) =>
     res.json(await getResults(esClient, req.body.input, req.body.filters)),
@@ -18,21 +20,21 @@ const createQuery = (input) => ({
       type: "most_fields",
       fields: ["title^3", "name^3", "race^2", "faction", "game"],
     },
-  }
-})
+  },
+});
 
 const query = (input, filters) => ({
   size: 0,
   query: {
     bool: {
       ...(filters ? createFilters(filters) : {}),
-      ...(input ? createQuery(input) : {})
+      ...(input ? createQuery(input) : {}),
     },
   },
   aggs: {
     latest_results: {
       terms: {
-        script: "doc['name.keyword'].value +'-'+ doc['website.keyword'].value",
+        script: "doc['name.keyword'].value +'-'+ doc['website'].value",
         order: {
           maximum_score: "desc",
         },
@@ -60,7 +62,7 @@ const getResults = async (esClient, input, filters) => {
   const body = query(input, filters);
 
   const results = await esClient.search({
-    index: "miniatures",
+    index: config.indexAliasName,
     filter_path:
       "hits.hits._id,hits.hits._score,hits.hits.highlight,hits.hits._source,hits.total,aggregations",
     body,
@@ -78,44 +80,44 @@ const getResults = async (esClient, input, filters) => {
     total: 0,
     results: buckets
       ? buckets.map(
-        ({
-          hits: {
+          ({
             hits: {
-              hits: [
-                {
-                  _score,
-                  _id,
-                  _source: {
-                    game,
-                    website,
-                    race,
-                    price,
-                    faction,
-                    link,
-                    name,
-                    title,
-                    date,
-                    inStockQuantity,
+              hits: {
+                hits: [
+                  {
+                    _score,
+                    _id,
+                    _source: {
+                      game,
+                      website,
+                      race,
+                      price,
+                      faction,
+                      link,
+                      name,
+                      title,
+                      date,
+                      inStockQuantity,
+                    },
                   },
-                },
-              ],
+                ],
+              },
             },
-          },
-        }) => ({
-          _score,
-          id: _id,
-          game,
-          website,
-          race,
-          price,
-          faction,
-          link,
-          name,
-          title,
-          date,
-          inStockQuantity,
-        })
-      )
+          }) => ({
+            _score,
+            id: _id,
+            game,
+            website,
+            race,
+            price,
+            faction,
+            link,
+            name,
+            title,
+            date,
+            inStockQuantity,
+          })
+        )
       : [],
   };
 

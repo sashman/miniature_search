@@ -1,3 +1,5 @@
+const config = require("./../config");
+
 module.exports = {
   availableFilters: (esClient) => async (req, res) => {
     try {
@@ -37,7 +39,7 @@ const body = {
 
 const getFilters = async (esClient) => {
   const response = await esClient.search({
-    index: "miniatures",
+    index: config.indexAliasName,
     body,
   });
 

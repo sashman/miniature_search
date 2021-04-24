@@ -1,8 +1,20 @@
 {
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "stemmed_analyzer": {
+          "type": "custom",
+          "filter": ["lowercase", "stemmer"],
+          "tokenizer": "standard"
+        }
+      }
+    }
+  },
   "mappings": {
     "properties": {
       "categories": {
         "type": "text",
+        "analyzer": "stemmed_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -12,6 +24,7 @@
       },
       "faction": {
         "type": "text",
+        "analyzer": "stemmed_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -21,6 +34,7 @@
       },
       "game": {
         "type": "text",
+        "analyzer": "stemmed_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -29,37 +43,20 @@
         }
       },
       "id": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "keyword"
       },
       "imgSrc": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "keyword"
       },
       "inStockQuantity": {
         "type": "long"
       },
       "link": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "keyword"
       },
       "name": {
         "type": "text",
+        "analyzer": "stemmed_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -68,19 +65,14 @@
         }
       },
       "price": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "keyword"
       },
       "quantity": {
         "type": "long"
       },
       "race": {
         "type": "text",
+        "analyzer": "stemmed_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -90,6 +82,7 @@
       },
       "title": {
         "type": "text",
+        "analyzer": "stemmed_analyzer",
         "fields": {
           "keyword": {
             "type": "keyword",
@@ -98,13 +91,7 @@
         }
       },
       "website": {
-        "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "type": "keyword"
       },
       "date": {
         "type": "date"
