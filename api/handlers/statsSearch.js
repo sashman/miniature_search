@@ -52,7 +52,9 @@ const getResults = async (esClient, term) => {
     body,
   });
 
-  return results.body.hits.hits.map(({ _source: { name, unit, weapons } }) => ({
+  const hits = results?.body?.hits?.hits || [];
+
+  return hits.map(({ _source: { name, unit, weapons } }) => ({
     name,
     models: groupProfiles(unit),
     weapons: groupProfiles(weapons),
