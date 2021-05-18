@@ -118,3 +118,5 @@ docker-elk/
 .tool-versions
 
 .DS_Store
+
+scrapers/battlescribe/wh40k/
