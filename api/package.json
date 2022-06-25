@@ -14,7 +14,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "node-html-parser": "^1.2.19",
     "puppeteer": "^4.0.0",
     "usleep": "^1.0.3"
